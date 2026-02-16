@@ -61,10 +61,7 @@ export function TopBar() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <div className="hidden sm:flex items-center gap-4 text-sm font-medium text-muted-foreground">
-                        <span className="text-foreground">Step 1 / 5</span>
-                    </div>
-
+                    
                     {/* Mobile Menu Toggle */}
                     <button
                         className="md:hidden p-2 text-muted-foreground hover:text-foreground"
