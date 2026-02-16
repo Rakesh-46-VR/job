@@ -12,11 +12,18 @@ export default function Proof() {
                     title="Proof of Work"
                     description="Validate your progress and ensure all system components are functioning correctly."
                 />
-                <Card className="min-h-[400px] flex flex-col justify-center items-center border-dashed border-2 border-border/50 bg-background/50">
-                    <p className="text-xl font-serif text-muted-foreground italic">
-                        This section will be built in the next step.
-                    </p>
-                </Card>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Card className="min-h-[200px] flex flex-col justify-center items-center border-dashed border-2 border-border/50 bg-background/50">
+                        <p className="text-lg font-serif text-muted-foreground italic">
+                            Artifact Collection Placeholder
+                        </p>
+                    </Card>
+                    <Card className="min-h-[200px] flex flex-col justify-center items-center border-dashed border-2 border-border/50 bg-background/50">
+                        <p className="text-lg font-serif text-muted-foreground italic">
+                            Tests & Logs Placeholder
+                        </p>
+                    </Card>
+                </div>
             </div>
         </AppLayout>
     );
