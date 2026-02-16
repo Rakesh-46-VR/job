@@ -10,10 +10,13 @@ import { Job } from "@/types/job";
 import { useState, useEffect } from "react";
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { Toast } from "@/components/ui/Toast";
 
 export default function Saved() {
     const [savedJobs, setSavedJobs] = useState<Job[]>([]);
     const [savedIds, setSavedIds] = useState<string[]>([]);
+    const [jobStatus, setJobStatus] = useState<Record<string, string>>({});
+    const [toast, setToast] = useState({ message: "", visible: false });
 
     // Modal State
     const [selectedJob, setSelectedJob] = useState<Job | null>(null);
@@ -27,7 +30,37 @@ export default function Saved() {
             const jobs = JOBS_DATA.filter(job => ids.includes(job.id));
             setSavedJobs(jobs);
         }
+
+        // Load Job Statuses
+        const statuses = localStorage.getItem('jobTrackerStatus');
+        if (statuses) {
+            setJobStatus(JSON.parse(statuses));
+        }
     }, []);
+
+    const handleStatusChange = (id: string, newStatus: string) => {
+        const updated = { ...jobStatus, [id]: newStatus };
+        setJobStatus(updated);
+        localStorage.setItem('jobTrackerStatus', JSON.stringify(updated));
+
+        // Log history for Digest
+        if (newStatus !== 'Not Applied') {
+            const historyItem = {
+                jobId: id,
+                jobTitle: savedJobs.find(j => j.id === id)?.title || 'Job',
+                company: savedJobs.find(j => j.id === id)?.company || 'Company',
+                status: newStatus,
+                date: new Date().toISOString()
+            };
+
+            const existingHistory = JSON.parse(localStorage.getItem('jobTrackerStatusHistory') || '[]');
+            const newHistory = [historyItem, ...existingHistory].slice(0, 20); // Keep last 20
+            localStorage.setItem('jobTrackerStatusHistory', JSON.stringify(newHistory));
+
+            // Show toast notification
+            setToast({ message: `Status updated to ${newStatus}`, visible: true });
+        }
+    };
 
     const handleSave = (id: string) => {
         // Determine new state (toggle logic, though usually saved page implies unsave)
@@ -67,6 +100,8 @@ export default function Saved() {
                                 onView={handleView}
                                 onSave={handleSave}
                                 isSaved={true}
+                                status={(jobStatus[job.id] as any) || 'Not Applied'}
+                                onStatusChange={handleStatusChange}
                             />
                         ))}
                     </div>
@@ -94,6 +129,12 @@ export default function Saved() {
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
                     onApply={(url) => window.open(url, '_blank')}
+                />
+
+                <Toast
+                    message={toast.message}
+                    isVisible={toast.visible}
+                    onClose={() => setToast(prev => ({ ...prev, visible: false }))}
                 />
             </div>
         </AppLayout>

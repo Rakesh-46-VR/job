@@ -4,15 +4,28 @@ import React from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 
+
 interface FilterBarProps {
     onSearch: (term: string) => void;
     onFilterChange: (type: string, value: string) => void;
     showMatchesOnly: boolean;
     onToggleMatches: () => void;
+    onClearFilters: () => void;
+    filters: {
+        location: string;
+        experience: string;
+        mode: string;
+        source: string;
+        status: string;
+        sort: string;
+    };
+    search: string;
 }
 
-export function FilterBar({ onSearch, onFilterChange, showMatchesOnly, onToggleMatches }: FilterBarProps) {
+export function FilterBar({ onSearch, onFilterChange, showMatchesOnly, onToggleMatches, onClearFilters, filters, search }: FilterBarProps) {
     const [isExpanded, setIsExpanded] = React.useState(false);
+
+    const hasActiveFilters = search || filters.location || filters.experience || filters.mode || filters.source || filters.status || filters.sort !== 'latest' || showMatchesOnly;
 
     return (
         <Card className="p-4 bg-background sticky top-20 z-30 shadow-sm border-b border-border/50">
@@ -24,6 +37,7 @@ export function FilterBar({ onSearch, onFilterChange, showMatchesOnly, onToggleM
                             <input
                                 type="text"
                                 placeholder="Search role or company..."
+                                value={search}
                                 className="w-full px-4 py-2 rounded-md border border-border focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all"
                                 onChange={(e) => onSearch(e.target.value)}
                             />
@@ -41,6 +55,7 @@ export function FilterBar({ onSearch, onFilterChange, showMatchesOnly, onToggleM
                     {/* Filters */}
                     <div className={`flex flex-wrap gap-2 flex-1 ${isExpanded ? 'flex' : 'hidden md:flex'}`}>
                         <select
+                            value={filters.location}
                             className="px-3 py-2 rounded-md border border-border bg-white text-sm focus:ring-1 focus:ring-primary outline-none cursor-pointer w-full md:w-auto"
                             onChange={(e) => onFilterChange('location', e.target.value)}
                         >
@@ -53,6 +68,7 @@ export function FilterBar({ onSearch, onFilterChange, showMatchesOnly, onToggleM
                         </select>
 
                         <select
+                            value={filters.experience}
                             className="px-3 py-2 rounded-md border border-border bg-white text-sm focus:ring-1 focus:ring-primary outline-none cursor-pointer w-full md:w-auto"
                             onChange={(e) => onFilterChange('experience', e.target.value)}
                         >
@@ -64,6 +80,7 @@ export function FilterBar({ onSearch, onFilterChange, showMatchesOnly, onToggleM
                         </select>
 
                         <select
+                            value={filters.mode}
                             className="px-3 py-2 rounded-md border border-border bg-white text-sm focus:ring-1 focus:ring-primary outline-none cursor-pointer w-full md:w-auto"
                             onChange={(e) => onFilterChange('mode', e.target.value)}
                         >
@@ -74,6 +91,7 @@ export function FilterBar({ onSearch, onFilterChange, showMatchesOnly, onToggleM
                         </select>
 
                         <select
+                            value={filters.source}
                             className="px-3 py-2 rounded-md border border-border bg-white text-sm focus:ring-1 focus:ring-primary outline-none cursor-pointer w-full md:w-auto"
                             onChange={(e) => onFilterChange('source', e.target.value)}
                         >
@@ -85,6 +103,7 @@ export function FilterBar({ onSearch, onFilterChange, showMatchesOnly, onToggleM
                         </select>
 
                         <select
+                            value={filters.sort}
                             className="px-3 py-2 rounded-md border border-border bg-white text-sm focus:ring-1 focus:ring-primary outline-none cursor-pointer "
                             onChange={(e) => onFilterChange('sort', e.target.value)}
                         >
@@ -92,11 +111,23 @@ export function FilterBar({ onSearch, onFilterChange, showMatchesOnly, onToggleM
                             <option value="match_score">Match Score</option>
                             <option value="oldest">Oldest</option>
                         </select>
+
+                        <select
+                            value={filters.status}
+                            className="px-3 py-2 rounded-md border border-border bg-white text-sm focus:ring-1 focus:ring-primary outline-none cursor-pointer w-full md:w-auto"
+                            onChange={(e) => onFilterChange('status', e.target.value)}
+                        >
+                            <option value="">All Statuses</option>
+                            <option value="Not Applied">Not Applied</option>
+                            <option value="Applied">Applied</option>
+                            <option value="Rejected">Rejected</option>
+                            <option value="Selected">Selected</option>
+                        </select>
                     </div>
                 </div>
 
-                {/* Intelligent Toggle */}
-                <div className={`flex items-center gap-2 pt-1 border-t border-border/40 ${isExpanded ? 'flex' : 'hidden md:flex'}`}>
+                {/* Intelligent Toggle & Clear */}
+                <div className={`flex items-center justify-between pt-1 border-t border-border/40 ${isExpanded ? 'flex' : 'hidden md:flex'}`}>
                     <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
                         <div className="relative">
                             <input
@@ -112,6 +143,17 @@ export function FilterBar({ onSearch, onFilterChange, showMatchesOnly, onToggleM
                             Show only jobs matches above threshold
                         </span>
                     </label>
+
+                    {hasActiveFilters && (
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={onClearFilters}
+                            className="text-red-500 hover:text-red-600 hover:bg-red-50 h-8 px-2 text-xs"
+                        >
+                            Clear All Filters ✕
+                        </Button>
+                    )}
                 </div>
             </div>
         </Card>

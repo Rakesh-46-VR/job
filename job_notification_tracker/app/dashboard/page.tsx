@@ -12,12 +12,15 @@ import { UserPreferences, calculateMatchScore } from "@/utils/matchScore";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
+import { Toast } from "@/components/ui/Toast";
 
 
 export default function Dashboard() {
     const [jobs, setJobs] = useState<Job[]>([]);
     const [savedJobs, setSavedJobs] = useState<string[]>([]);
+    const [jobStatus, setJobStatus] = useState<Record<string, string>>({});
     const [prefs, setPrefs] = useState<UserPreferences | null>(null);
+    const [toast, setToast] = useState({ message: "", visible: false });
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -28,6 +31,7 @@ export default function Dashboard() {
         experience: "",
         mode: "",
         source: "",
+        status: "",
         sort: "latest"
     });
     const [showMatchesOnly, setShowMatchesOnly] = useState(false);
@@ -46,6 +50,12 @@ export default function Dashboard() {
             setSavedJobs(JSON.parse(saved));
         }
 
+        // Load Job Statuses
+        const statuses = localStorage.getItem('jobTrackerStatus');
+        if (statuses) {
+            setJobStatus(JSON.parse(statuses));
+        }
+
         // Load Preferences
         const savedPrefs = localStorage.getItem('jobTrackerPreferences');
         if (savedPrefs) {
@@ -53,6 +63,30 @@ export default function Dashboard() {
         }
         setIsLoading(false);
     }, []);
+
+    const handleStatusChange = (id: string, newStatus: string) => {
+        const updated = { ...jobStatus, [id]: newStatus };
+        setJobStatus(updated);
+        localStorage.setItem('jobTrackerStatus', JSON.stringify(updated));
+
+        // Log history for Digest
+        if (newStatus !== 'Not Applied') {
+            const historyItem = {
+                jobId: id,
+                jobTitle: jobs.find(j => j.id === id)?.title || 'Job',
+                company: jobs.find(j => j.id === id)?.company || 'Company',
+                status: newStatus,
+                date: new Date().toISOString()
+            };
+
+            const existingHistory = JSON.parse(localStorage.getItem('jobTrackerStatusHistory') || '[]');
+            const newHistory = [historyItem, ...existingHistory].slice(0, 20); // Keep last 20
+            localStorage.setItem('jobTrackerStatusHistory', JSON.stringify(newHistory));
+
+            // Show toast notification
+            setToast({ message: `Status updated to ${newStatus}`, visible: true });
+        }
+    };
 
     // Filter Logic
     const filteredJobs = useMemo(() => {
@@ -77,6 +111,14 @@ export default function Dashboard() {
         if (filters.mode) result = result.filter(job => job.mode === filters.mode);
         if (filters.source) result = result.filter(job => job.source === filters.source);
 
+        // Status Filter
+        if (filters.status) {
+            result = result.filter(job => {
+                const currentStatus = jobStatus[job.id] || 'Not Applied';
+                return currentStatus === filters.status;
+            });
+        }
+
         // Match Toggle
         if (showMatchesOnly && prefs) {
             result = result.filter(job => (job.matchScore || 0) >= prefs.minMatchScore);
@@ -92,11 +134,24 @@ export default function Dashboard() {
         }
 
         return result;
-    }, [jobs, search, filters, showMatchesOnly, prefs]);
+    }, [jobs, search, filters, showMatchesOnly, prefs, jobStatus]);
 
 
     const handleFilterChange = (type: string, value: string) => {
         setFilters(prev => ({ ...prev, [type]: value }));
+    };
+
+    const handleClearFilters = () => {
+        setSearch("");
+        setFilters({
+            location: "",
+            experience: "",
+            mode: "",
+            source: "",
+            status: "",
+            sort: "latest"
+        });
+        setShowMatchesOnly(false);
     };
 
     const handleSave = (id: string) => {
@@ -149,10 +204,13 @@ export default function Dashboard() {
                         ) : null}
 
                         <FilterBar
+                            search={search}
+                            filters={filters}
                             onSearch={setSearch}
                             onFilterChange={handleFilterChange}
                             showMatchesOnly={showMatchesOnly}
                             onToggleMatches={() => setShowMatchesOnly(!showMatchesOnly)}
+                            onClearFilters={handleClearFilters}
                         />
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -165,6 +223,8 @@ export default function Dashboard() {
                                         onView={handleView}
                                         onSave={handleSave}
                                         isSaved={savedJobs.includes(job.id)}
+                                        status={(jobStatus[job.id] as any) || 'Not Applied'}
+                                        onStatusChange={handleStatusChange}
                                     />
                                 ))
                             ) : (
@@ -188,6 +248,12 @@ export default function Dashboard() {
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
                     onApply={(url) => window.open(url, '_blank')}
+                />
+
+                <Toast
+                    message={toast.message}
+                    isVisible={toast.visible}
+                    onClose={() => setToast(prev => ({ ...prev, visible: false }))}
                 />
             </div>
         </AppLayout>
