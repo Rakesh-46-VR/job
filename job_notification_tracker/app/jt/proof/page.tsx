@@ -7,6 +7,17 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Toast } from "@/components/ui/Toast";
 
+// URL validation helper
+const isValidURL = (url: string): boolean => {
+    if (!url) return false;
+    try {
+        new URL(url);
+        return url.startsWith("http://") || url.startsWith("https://");
+    } catch {
+        return false;
+    }
+};
+
 export default function ProofPage() {
     const [links, setLinks] = useState({
         lovable: "",
@@ -14,7 +25,7 @@ export default function ProofPage() {
         deployed: ""
     });
     const [isVerified, setIsVerified] = useState(false);
-    const [status, setStatus] = useState("Not Started");
+    const [status, setStatus] = useState<"Not Started" | "In Progress" | "Shipped">("Not Started");
     const [toast, setToast] = useState({ message: "", visible: false });
 
     useEffect(() => {
@@ -35,10 +46,11 @@ export default function ProofPage() {
         }
     }, []);
 
+    // Update status based on conditions
     useEffect(() => {
-        // Update status logic
-        const hasLinks = links.lovable && links.github && links.deployed;
-        if (isVerified && hasLinks) {
+        const allLinksValid = isValidURL(links.lovable) && isValidURL(links.github) && isValidURL(links.deployed);
+        
+        if (isVerified && allLinksValid) {
             setStatus("Shipped");
         } else if (links.lovable || links.github || links.deployed) {
             setStatus("In Progress");
@@ -54,7 +66,24 @@ export default function ProofPage() {
     };
 
     const handleCopy = () => {
-        const text = `Job Notification Tracker — Final Submission\n\nLovable Project:\n${links.lovable}\n\nGitHub Repository:\n${links.github}\n\nLive Deployment:\n${links.deployed}\n\nCore Features:\n- Intelligent match scoring\n- Daily digest simulation\n- Status tracking\n- Test checklist enforced`;
+        const text = `------------------------------------------
+Job Notification Tracker — Final Submission
+
+Lovable Project:
+${links.lovable}
+
+GitHub Repository:
+${links.github}
+
+Live Deployment:
+${links.deployed}
+
+Core Features:
+- Intelligent match scoring
+- Daily digest simulation
+- Status tracking
+- Test checklist enforced
+------------------------------------------`;
         navigator.clipboard.writeText(text);
         setToast({ message: "Submission copied to clipboard", visible: true });
     };
@@ -66,6 +95,8 @@ export default function ProofPage() {
             default: return "bg-gray-100 text-gray-700 border-gray-200";
         }
     };
+
+    const allLinksValid = isValidURL(links.lovable) && isValidURL(links.github) && isValidURL(links.deployed);
 
     return (
         <AppLayout>
@@ -92,50 +123,90 @@ export default function ProofPage() {
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium mb-1">Lovable Project Link</label>
+                                <label className="block text-sm font-medium mb-1">Lovable Project Link<span className="text-red-500">*</span></label>
                                 <input
                                     type="url"
                                     placeholder="https://lovable.dev/..."
-                                    className="w-full px-4 py-2 rounded border border-border focus:ring-1 focus:ring-primary outline-none"
+                                    className={`w-full px-4 py-2 rounded border focus:ring-1 focus:ring-primary outline-none ${
+                                        links.lovable && !isValidURL(links.lovable) 
+                                            ? "border-red-300 bg-red-50" 
+                                            : isValidURL(links.lovable) 
+                                            ? "border-green-300 bg-green-50/30" 
+                                            : "border-border"
+                                    }`}
                                     value={links.lovable}
                                     onChange={(e) => handleLinkChange("lovable", e.target.value)}
                                 />
+                                {links.lovable && !isValidURL(links.lovable) && (
+                                    <p className="text-xs text-red-500 mt-1">Please enter a valid URL starting with http:// or https://</p>
+                                )}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium mb-1">GitHub Repository Link</label>
+                                <label className="block text-sm font-medium mb-1">GitHub Repository Link<span className="text-red-500">*</span></label>
                                 <input
                                     type="url"
                                     placeholder="https://github.com/..."
-                                    className="w-full px-4 py-2 rounded border border-border focus:ring-1 focus:ring-primary outline-none"
+                                    className={`w-full px-4 py-2 rounded border focus:ring-1 focus:ring-primary outline-none ${
+                                        links.github && !isValidURL(links.github) 
+                                            ? "border-red-300 bg-red-50" 
+                                            : isValidURL(links.github) 
+                                            ? "border-green-300 bg-green-50/30" 
+                                            : "border-border"
+                                    }`}
                                     value={links.github}
                                     onChange={(e) => handleLinkChange("github", e.target.value)}
                                 />
+                                {links.github && !isValidURL(links.github) && (
+                                    <p className="text-xs text-red-500 mt-1">Please enter a valid URL starting with http:// or https://</p>
+                                )}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium mb-1">Deployed URL</label>
+                                <label className="block text-sm font-medium mb-1">Deployed URL<span className="text-red-500">*</span></label>
                                 <input
                                     type="url"
                                     placeholder="https://vercel.app/..."
-                                    className="w-full px-4 py-2 rounded border border-border focus:ring-1 focus:ring-primary outline-none"
+                                    className={`w-full px-4 py-2 rounded border focus:ring-1 focus:ring-primary outline-none ${
+                                        links.deployed && !isValidURL(links.deployed) 
+                                            ? "border-red-300 bg-red-50" 
+                                            : isValidURL(links.deployed) 
+                                            ? "border-green-300 bg-green-50/30" 
+                                            : "border-border"
+                                    }`}
                                     value={links.deployed}
                                     onChange={(e) => handleLinkChange("deployed", e.target.value)}
                                 />
+                                {links.deployed && !isValidURL(links.deployed) && (
+                                    <p className="text-xs text-red-500 mt-1">Please enter a valid URL starting with http:// or https://</p>
+                                )}
                             </div>
                         </div>
 
-                        <div className="pt-4 border-t border-border flex justify-end">
-                            <Button
-                                onClick={handleCopy}
-                                disabled={status !== "Shipped"}
-                                className={status !== "Shipped" ? "opacity-50 cursor-not-allowed" : "bg-primary text-primary-foreground hover:bg-primary/90"}
-                            >
-                                Copy Final Submission
-                            </Button>
+                        <div className="pt-4 border-t border-border space-y-3">
+                            {!isVerified && (
+                                <p className="text-sm text-amber-600 bg-amber-50 p-3 rounded border border-amber-200">
+                                    ⚠️ Complete all 10 test checklist items before shipping.
+                                </p>
+                            )}
+                            {isVerified && !allLinksValid && (
+                                <p className="text-sm text-amber-600 bg-amber-50 p-3 rounded border border-amber-200">
+                                    ⚠️ Provide all 3 valid links before shipping.
+                                </p>
+                            )}
+                            <div className="flex justify-end">
+                                <Button
+                                    onClick={handleCopy}
+                                    disabled={status !== "Shipped"}
+                                    className={status !== "Shipped" ? "opacity-50 cursor-not-allowed" : "bg-primary text-primary-foreground hover:bg-primary/90"}
+                                >
+                                    Copy Final Submission
+                                </Button>
+                            </div>
                         </div>
                     </Card>
 
                     <Card className="p-6 space-y-4 h-fit">
                         <h3 className="font-bold text-lg">Step Completion</h3>
+                        <p className="text-xs text-muted-foreground">8 steps to complete Project 1</p>
 
                         <div className="space-y-3">
                             <StepItem label="Project Setup" isCompleted={true} />
@@ -145,7 +216,7 @@ export default function ProofPage() {
                             <StepItem label="Status Tracking" isCompleted={true} />
                             <StepItem label="Digest System" isCompleted={true} />
                             <StepItem label="Test Verification" isCompleted={isVerified} />
-                            <StepItem label="Deployment Links" isCompleted={!!(links.lovable && links.github && links.deployed)} />
+                            <StepItem label="Deployment Links" isCompleted={allLinksValid} />
                         </div>
                     </Card>
                 </div>
@@ -164,8 +235,8 @@ function StepItem({ label, isCompleted }: { label: string, isCompleted: boolean 
     return (
         <div className="flex items-center justify-between text-sm">
             <span className={isCompleted ? "text-gray-700 font-medium" : "text-gray-500"}>{label}</span>
-            <span className={`px-2 py-0.5 rounded textxs font-bold ${isCompleted ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
-                {isCompleted ? "DONE" : "PENDING"}
+            <span className={`px-2 py-0.5 rounded text-xs font-bold ${isCompleted ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
+                {isCompleted ? "✓" : "PENDING"}
             </span>
         </div>
     );
