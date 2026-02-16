@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-card: var(--card);
+}
+
+:root {
+  /* Color System */
+  --background: #F7F6F3;
+  --foreground: #111111;
+  --primary: #8B0000;
+  --secondary: #E5E5E5;
+  /* Light border/secondary */
+  --accent: #8B0000;
+  --success: #059669;
+  /* Muted green */
+  --warning: #d97706;
+  /* Muted amber */
+  --card: #FFFFFF;
+  --border: #E5E5E5;
+
+  /* Spacing Scale (8px base) - mapped to standard Tailwind mostly but can be enforced */
+  /* 
+     Tailwind default:
+     1 = 0.25rem = 4px
+     2 = 0.5rem = 8px
+     3 = 0.75rem = 12px
+     4 = 1rem = 16px
+     5 = 1.25rem = 20px
+     6 = 1.5rem = 24px
+     etc.
+     User wants: 8px (2), 16px (4), 24px (6), 40px (10), 64px (16).
+  */
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply font-sans antialiased;
+    line-height: 1.6;
+    /* 1.6-1.8 request */
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif font-bold tracking-tight text-foreground;
+    /* Generous spacing can be handled in utility usage (mb-6, etc.) */
+  }
+
+  /* Reset for consistent clean inputs */
+  input,
+  textarea,
+  select {
+    @apply border border-border rounded-md px-3 py-2 bg-white ring-offset-background outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-200 ease-in-out;
+  }
+}
