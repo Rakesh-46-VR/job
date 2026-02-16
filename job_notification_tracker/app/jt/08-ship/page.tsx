@@ -42,7 +42,7 @@ export default function ShipPage() {
                     </p>
                     <Link href="/jt/07-test">
                         <Button variant="outline" className="mt-4">
-                           ← Return to Verification Checklist
+                            ← Return to Verification Checklist
                         </Button>
                     </Link>
                 </div>
@@ -56,7 +56,7 @@ export default function ShipPage() {
                 <div className="inline-block p-4 rounded-full bg-green-100 text-green-600 text-4xl mb-4">
                     🚢
                 </div>
-                
+
                 <ContextHeader
                     title="Ready for Liftoff"
                     description="All systems verified. You are clear to launch."
@@ -75,7 +75,7 @@ export default function ShipPage() {
                                 <span className="font-mono text-lg">v1.0.0-RC1</span>
                             </div>
                         </div>
-                        
+
                         <div className="pt-6 border-t border-green-200/50">
                             <p className="text-sm text-green-800 italic">
                                 "Great products are built on a foundation of rigorous testing."
@@ -83,14 +83,16 @@ export default function ShipPage() {
                         </div>
                     </div>
                 </Card>
-                
+
                 <div className="flex justify-center gap-4">
-                     <Link href="/">
+                    <Link href="/">
                         <Button variant="outline">Back Home</Button>
                     </Link>
-                     <Button className="bg-green-600 hover:bg-green-700 text-white px-8">
-                        Prepare Release Bundle
-                    </Button>
+                    <Link href="/jt/proof">
+                        <Button className="bg-green-600 hover:bg-green-700 text-white px-8">
+                            Prepare Release Bundle
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </AppLayout>
