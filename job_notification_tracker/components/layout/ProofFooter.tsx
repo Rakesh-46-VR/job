@@ -13,7 +13,7 @@ export function ProofFooter() {
     };
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur p-4 z-40">
+        <div className="hidden md:block fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur p-4 z-40">
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4 gap-4 md:gap-0">
                 <div className="flex w-full md:w-auto items-center justify-between md:justify-start gap-4">
                     <div className="font-medium text-sm text-muted-foreground uppercase tracking-wider">

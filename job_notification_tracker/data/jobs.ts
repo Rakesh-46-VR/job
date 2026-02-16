@@ -45,7 +45,24 @@ const generateJobs = (): Job[] => {
         const mode = Math.random() > 0.7 ? 'Remote' : (Math.random() > 0.5 ? 'Hybrid' : 'Onsite');
 
         // Skills
-        const skillSet = ['Java', 'Python', 'React', 'Node.js', 'SQL', 'AWS', 'JavaScript', 'TypeScript', 'C++', 'Spring Boot', 'Django'];
+        // Skills based on Role
+        let skillSet = ['Java', 'Python', 'React', 'Node.js', 'SQL', 'AWS', 'JavaScript', 'TypeScript', 'C++', 'Spring Boot', 'Django'];
+
+        const lowerRole = role.toLowerCase();
+        if (lowerRole.includes('python')) {
+            skillSet = ['Python', 'Django', 'Flask', 'SQL', 'AWS', 'Pandas', 'NumPy', 'FastAPI'];
+        } else if (lowerRole.includes('react') || lowerRole.includes('frontend')) {
+            skillSet = ['React', 'TypeScript', 'JavaScript', 'Redux', 'HTML', 'CSS', 'Tailwind', 'Next.js'];
+        } else if (lowerRole.includes('java')) {
+            skillSet = ['Java', 'Spring Boot', 'Hibernate', 'SQL', 'Microservices', 'Kafka', 'AWS'];
+        } else if (lowerRole.includes('node') || lowerRole.includes('backend')) {
+            skillSet = ['Node.js', 'Express', 'MongoDB', 'SQL', 'AWS', 'Redis', 'TypeScript'];
+        } else if (lowerRole.includes('data')) {
+            skillSet = ['Python', 'SQL', 'Pandas', 'Machine Learning', 'Tableau', 'PowerBI', 'AWS'];
+        } else if (lowerRole.includes('qa')) {
+            skillSet = ['Selenium', 'Java', 'Python', 'Jira', 'Postman', 'SQL', 'Automation'];
+        }
+
         const skills = Array.from({ length: 3 + Math.floor(Math.random() * 3) }, () => skillSet[Math.floor(Math.random() * skillSet.length)]);
 
         // Unique skills

@@ -5,15 +5,17 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Job } from '@/types/job';
 import { Card } from '@/components/ui/Card';
+import { getMatchScoreColor } from '@/utils/matchScore';
 
 interface JobCardProps {
     job: Job;
+    matchScore?: number;
     onView: (job: Job) => void;
     onSave: (id: string) => void;
     isSaved?: boolean;
 }
 
-export function JobCard({ job, onView, onSave, isSaved = false }: JobCardProps) {
+export function JobCard({ job, matchScore, onView, onSave, isSaved = false }: JobCardProps) {
     const getSourceColor = (source: Job['source']) => {
         switch (source) {
             case 'LinkedIn': return 'bg-blue-100 text-blue-700';
@@ -36,9 +38,17 @@ export function JobCard({ job, onView, onSave, isSaved = false }: JobCardProps) 
                         </h3>
                         <p className="text-sm font-medium text-muted-foreground mt-1">{job.company}</p>
                     </div>
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${getSourceColor(job.source)}`}>
-                        {job.source}
-                    </span>
+
+                    <div className="flex flex-col items-end gap-2">
+                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${getSourceColor(job.source)}`}>
+                            {job.source}
+                        </span>
+                        {matchScore !== undefined && (
+                            <div className={`px-2 py-0.5 rounded textxs font-bold border ${getMatchScoreColor(matchScore)}`}>
+                                {matchScore}% Match
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2 text-sm text-foreground/80">
