@@ -186,13 +186,13 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
     };
 
     return (
-        <div className="space-y-6 max-w-7xl mx-auto">
-            <div className="flex justify-between items-center border-b border-gray-200 pb-4">
+        <div className="space-y-6 max-w-7xl mx-auto overflow-x-hidden">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-200 pb-4 gap-3">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Job Description Analysis</h1>
-                    <p className="text-gray-500 mt-1">Get an AI-powered breakdown of your target role.</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Job Description Analysis</h1>
+                    <p className="text-gray-500 mt-1 text-sm">Get an AI-powered breakdown of your target role.</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2 w-full sm:w-auto">
                     {activeTab === 'result' && (
                         <button
                             onClick={downloadTxt}
@@ -218,13 +218,13 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
 
             {activeTab === "new" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <Card className="max-w-3xl mx-auto p-6 md:p-8">
-                        <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                    <Card className="max-w-3xl mx-auto p-4 sm:p-6 md:p-8">
+                        <h2 className="text-lg sm:text-xl font-semibold mb-6 flex items-center gap-2">
                             <FileText className="w-5 h-5 text-primary" />
                             Enter Job Details
                         </h2>
                         <div className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Company Name</label>
                                     <input
@@ -276,7 +276,7 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
             )}
 
             {activeTab === "history" && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-500">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 animate-in fade-in duration-500">
                     {history.length === 0 ? (
                         <div className="col-span-full text-center py-20 text-gray-500">
                             <History className="w-12 h-12 mx-auto mb-4 opacity-20" />
@@ -314,52 +314,52 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
             )}
 
             {activeTab === "result" && currentAnalysis && (
-                <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-500">
+                <div className="space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-right-8 duration-500">
                     {/* Header Summary */}
-                    <div className="bg-white p-6 rounded-xl border border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-sm">
+                    <div className="bg-white p-4 sm:p-6 rounded-xl border border-border flex flex-col gap-4 sm:gap-6 shadow-sm">
                         <div>
-                            <div className="flex items-center gap-3 mb-1">
-                                <h2 className="text-2xl font-bold font-serif text-foreground">{currentAnalysis.role || "Analysis Results"}</h2>
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-1">
+                                <h2 className="text-xl sm:text-2xl font-bold font-serif text-foreground">{currentAnalysis.role || "Analysis Results"}</h2>
                                 {currentAnalysis.company && (
-                                    <span className="px-3 py-1 bg-secondary text-foreground text-sm font-medium rounded-full">
+                                    <span className="px-3 py-1 bg-secondary text-foreground text-sm font-medium rounded-full inline-block w-fit">
                                         {currentAnalysis.company}
                                     </span>
                                 )}
                             </div>
-                            <p className="text-sm text-muted-foreground">Analyzed on {new Date(currentAnalysis.createdAt).toLocaleString()}</p>
+                            <p className="text-xs sm:text-sm text-muted-foreground">Analyzed on {new Date(currentAnalysis.createdAt).toLocaleString()}</p>
                         </div>
-                        <div className="flex flex-col items-end gap-2">
-                            <div className="flex items-center gap-4 bg-secondary/30 px-6 py-3 rounded-lg border border-border">
-                                <div className="text-right">
+                        <div className="flex flex-col items-start sm:items-end gap-2">
+                            <div className="flex items-center gap-4 bg-secondary/30 px-4 sm:px-6 py-3 rounded-lg border border-border w-full sm:w-auto">
+                                <div className="text-left sm:text-right flex-1 sm:flex-none">
                                     <div className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Readiness Score</div>
-                                    <div className={`text-3xl font-bold ${getScoreColor(currentAnalysis.readinessScore)}`}>
+                                    <div className={`text-2xl sm:text-3xl font-bold ${getScoreColor(currentAnalysis.readinessScore)}`}>
                                         {currentAnalysis.readinessScore}/100
                                     </div>
                                 </div>
-                                <Target className={`w-10 h-10 ${getScoreColor(currentAnalysis.readinessScore)}`} />
+                                <Target className={`w-8 h-8 sm:w-10 sm:h-10 ${getScoreColor(currentAnalysis.readinessScore)}`} />
                             </div>
                             <p className="text-xs text-muted-foreground">*Updates live as you check skills</p>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
 
                         {/* Left Column: Skills & Questions */}
-                        <div className="space-y-8 lg:col-span-2">
+                        <div className="space-y-6 sm:space-y-8 lg:col-span-2">
 
                             {/* Company Intel Card */}
                             {currentAnalysis.companyIntel && (
                                 <section className="card-intel bg-white rounded-xl border border-border shadow-sm overflow-hidden">
-                                    <div className="bg-primary/5 px-6 py-4 border-b border-border flex justify-between items-center">
-                                        <h3 className="text-lg font-bold font-serif text-primary flex items-center gap-2">
+                                    <div className="bg-primary/5 px-4 sm:px-6 py-4 border-b border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                                        <h3 className="text-base sm:text-lg font-bold font-serif text-primary flex items-center gap-2">
                                             <Building2 className="w-5 h-5" /> Company Intelligence
                                         </h3>
                                         <span className="px-3 py-1 bg-white text-primary text-xs font-bold rounded-full border border-primary/20 uppercase tracking-wide">
                                             {currentAnalysis.companyIntel.type}
                                         </span>
                                     </div>
-                                    <div className="p-6">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                                    <div className="p-4 sm:p-6">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4">
                                             <div>
                                                 <p className="text-xs text-muted-foreground uppercase font-semibold mb-1">Industry</p>
                                                 <p className="text-foreground font-medium">{currentAnalysis.companyIntel.industry}</p>
@@ -375,17 +375,17 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
 
                             {/* Detected Skills */}
                             <section>
-                                <div className="flex justify-between items-center mb-4">
-                                    <h3 className="text-lg font-bold font-serif text-foreground flex items-center gap-2">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+                                    <h3 className="text-base sm:text-lg font-bold font-serif text-foreground flex items-center gap-2">
                                         <CheckCircle2 className="w-5 h-5 text-primary" /> Key Skills Extracted
                                     </h3>
                                     <span className="text-xs text-muted-foreground bg-white px-2 py-1 border rounded">Tap to toggle confidence</span>
                                 </div>
 
-                                <div className="bg-white p-6 rounded-xl border border-border shadow-sm">
-                                    <div className="flex flex-wrap gap-4">
+                                <div className="bg-white p-4 sm:p-6 rounded-xl border border-border shadow-sm overflow-x-auto">
+                                    <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
                                         {(Object.entries(currentAnalysis.extractedSkills) as [string, string[]][]).map(([category, skills]) => (
-                                            <div key={category} className="flex-1 min-w-[200px]">
+                                            <div key={category} className="flex-1 min-w-45 sm:min-w-50">
                                                 <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 border-b pb-1">{category}</h4>
                                                 <div className="flex flex-wrap gap-2">
                                                     {skills.map(skill => {
@@ -414,8 +414,8 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
 
                             {/* 7 Day Plan */}
                             <section>
-                                <div className="flex justify-between items-center mb-4">
-                                    <h3 className="text-lg font-bold font-serif text-foreground flex items-center gap-2">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+                                    <h3 className="text-base sm:text-lg font-bold font-serif text-foreground flex items-center gap-2">
                                         <CalendarDays className="w-5 h-5 text-primary" /> 7-Day Strategy Plan
                                     </h3>
                                     <button
@@ -437,8 +437,8 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
 
                                 <div className="space-y-4">
                                     {currentAnalysis.plan.map((day, idx) => (
-                                        <div key={idx} className="bg-white p-5 rounded-lg border border-border shadow-sm hover:shadow-md transition-shadow">
-                                            <div className="flex justify-between items-start mb-3">
+                                        <div key={idx} className="bg-white p-4 sm:p-5 rounded-lg border border-border shadow-sm hover:shadow-md transition-shadow">
+                                            <div className="flex flex-col sm:flex-row justify-between items-start gap-3 mb-3">
                                                 <span className="px-3 py-1 bg-secondary text-primary text-xs font-bold rounded uppercase tracking-wide">
                                                     {day.day}
                                                 </span>
@@ -460,9 +460,9 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
                             </section>
 
                             {/* Action Next */}
-                            <section className="bg-primary/5 border border-primary/10 p-6 rounded-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                            <section className="bg-primary/5 border border-primary/10 p-4 sm:p-6 rounded-xl flex flex-col gap-4 sm:gap-6">
                                 <div>
-                                    <h4 className="text-lg font-bold font-serif text-foreground flex items-center gap-2 mb-2">
+                                    <h4 className="text-base sm:text-lg font-bold font-serif text-foreground flex items-center gap-2 mb-2">
                                         <AlertCircle className="w-5 h-5 text-primary" /> Recommended Actions
                                     </h4>
                                     <p className="text-sm text-gray-600 mb-2">
@@ -477,7 +477,7 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
                                         {getWeakSkills().length === 0 ? <span className="text-sm font-medium">Everything looks good! Review basics.</span> : null}
                                     </div>
                                 </div>
-                                <button className="px-6 py-3 bg-primary text-white font-bold rounded-lg shadow-lg hover:brightness-110 transition-colors whitespace-nowrap">
+                                <button className="px-6 py-3 bg-primary text-white font-bold rounded-lg shadow-lg hover:brightness-110 transition-colors w-full sm:w-auto">
                                     Start Day 1 Plan
                                 </button>
                             </section>
@@ -485,19 +485,19 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
                         </div>
 
                         {/* Right Column: Checklist & Questions */}
-                        <div className="space-y-8">
+                        <div className="space-y-6 sm:space-y-8">
 
                             {/* Round Mapping */}
                             {currentAnalysis.roundMapping && (
                                 <section>
-                                    <h3 className="text-lg font-bold font-serif text-foreground mb-4 flex items-center gap-2">
+                                    <h3 className="text-base sm:text-lg font-bold font-serif text-foreground mb-4 flex items-center gap-2">
                                         <Users className="w-5 h-5 text-primary" /> Interview Rounds
                                     </h3>
-                                    <div className="bg-white rounded-xl border border-border shadow-sm p-6">
+                                    <div className="bg-white rounded-xl border border-border shadow-sm p-4 sm:p-6">
                                         <div className="relative border-l-2 border-primary/20 ml-3 space-y-8">
                                             {currentAnalysis.roundMapping.map((round, idx) => (
                                                 <div key={idx} className="relative pl-8">
-                                                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-primary border-4 border-white shadow-sm" />
+                                                    <div className="absolute -left-2.25 top-0 w-4 h-4 rounded-full bg-primary border-4 border-white shadow-sm" />
                                                     <h4 className="text-sm font-bold text-foreground">{round.roundName}</h4>
                                                     <p className="text-sm text-gray-600 mt-1">{round.description}</p>
                                                     <div className="mt-2 text-xs bg-secondary/20 text-muted-foreground p-2 rounded border border-border italic">
@@ -513,8 +513,8 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
 
                             {/* Round Checklist */}
                             <section>
-                                <div className="flex justify-between items-center mb-4">
-                                    <h3 className="text-lg font-bold font-serif text-foreground flex items-center gap-2">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+                                    <h3 className="text-base sm:text-lg font-bold font-serif text-foreground flex items-center gap-2">
                                         <ListChecks className="w-5 h-5 text-primary" /> Round Preparation
                                     </h3>
                                     <button
@@ -552,8 +552,8 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
 
                             {/* Likely Questions */}
                             <section>
-                                <div className="flex justify-between items-center mb-4">
-                                    <h3 className="text-lg font-bold font-serif text-foreground flex items-center gap-2">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+                                    <h3 className="text-base sm:text-lg font-bold font-serif text-foreground flex items-center gap-2">
                                         <HelpCircle className="w-5 h-5 text-primary" /> Likely Questions
                                     </h3>
                                     <button
@@ -576,7 +576,7 @@ ${currentAnalysis.questions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
                                     <ul className="divide-y divide-border">
                                         {currentAnalysis.questions.map((q, i) => (
                                             <li key={i} className="p-4 text-sm text-gray-700 hover:bg-secondary/10 flex gap-3">
-                                                <span className="font-bold text-primary min-w-[20px]">{i + 1}.</span>
+                                                <span className="font-bold text-primary min-w-5">{i + 1}.</span>
                                                 {q}
                                             </li>
                                         ))}

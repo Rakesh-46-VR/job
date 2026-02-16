@@ -48,31 +48,52 @@ const CardContent = ({ className = "", children }: { className?: string, childre
 
 export default function DashboardPage() {
     return (
-        <div className="space-y-8 animate-in fade-in duration-500">
-            <div className="flex justify-between items-center">
+        <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-500">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                 <div>
-                    <h1 className="text-3xl font-bold font-serif text-foreground tracking-tight">Dashboard</h1>
-                    <p className="text-muted-foreground mt-1">Track your progress and stay on target.</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold font-serif text-foreground tracking-tight">Dashboard</h1>
+                    <p className="text-muted-foreground mt-1 text-sm">Track your progress and stay on target.</p>
                 </div>
-                <div className="text-sm font-medium text-muted-foreground bg-card px-3 py-1 rounded-full border border-border shadow-sm">
+                <div className="text-xs sm:text-sm font-medium text-muted-foreground bg-card px-3 py-1 rounded-full border border-border shadow-sm">
                     {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
 
                 {/* Left Column */}
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
 
                     {/* Overall Readiness */}
-                    <Card className="flex flex-col items-center justify-center py-8 bg-card border-border">
+                    <Card className="flex flex-col items-center justify-center py-6 sm:py-8 bg-card border-border">
                         <CardHeader className="w-full text-center pb-2">
-                            <CardTitle className="text-xl">Overall Readiness</CardTitle>
+                            <CardTitle className="text-lg sm:text-xl">Overall Readiness</CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-col items-center">
-                            <div className="relative w-48 h-48">
+                            <div className="relative w-40 h-40 sm:w-48 sm:h-48">
                                 {/* Custom SVG Circle with animation */}
                                 <svg className="w-full h-full transform -rotate-90">
+                                    <circle
+                                        cx="80"
+                                        cy="80"
+                                        r="72"
+                                        stroke="#e5e5e5"
+                                        strokeWidth="12"
+                                        fill="transparent"
+                                        className="sm:hidden"
+                                    />
+                                    <circle
+                                        cx="80"
+                                        cy="80"
+                                        r="72"
+                                        stroke="#8B0000"
+                                        strokeWidth="12"
+                                        fill="transparent"
+                                        strokeDasharray={2 * Math.PI * 72}
+                                        strokeDashoffset={2 * Math.PI * 72 * (1 - 0.72)}
+                                        strokeLinecap="round"
+                                        className="text-primary transition-all duration-1000 ease-out sm:hidden"
+                                    />
                                     <circle
                                         cx="96"
                                         cy="96"
@@ -80,6 +101,7 @@ export default function DashboardPage() {
                                         stroke="#e5e5e5"
                                         strokeWidth="12"
                                         fill="transparent"
+                                        className="hidden sm:block"
                                     />
                                     <circle
                                         cx="96"
@@ -91,15 +113,15 @@ export default function DashboardPage() {
                                         strokeDasharray={2 * Math.PI * 88}
                                         strokeDashoffset={2 * Math.PI * 88 * (1 - 0.72)}
                                         strokeLinecap="round"
-                                        className="text-primary transition-all duration-1000 ease-out"
+                                        className="text-primary transition-all duration-1000 ease-out hidden sm:block"
                                     />
                                 </svg>
                                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span className="text-5xl font-bold text-foreground">72</span>
-                                    <span className="text-sm text-muted-foreground font-medium uppercase tracking-wider mt-1">Score</span>
+                                    <span className="text-4xl sm:text-5xl font-bold text-foreground">72</span>
+                                    <span className="text-xs sm:text-sm text-muted-foreground font-medium uppercase tracking-wider mt-1">Score</span>
                                 </div>
                             </div>
-                            <p className="mt-4 text-center text-muted-foreground max-w-xs">
+                            <p className="mt-4 text-center text-muted-foreground max-w-xs text-sm">
                                 You're in the top 28% of candidates! Keep pushing to reach 85+.
                             </p>
                         </CardContent>
@@ -151,14 +173,14 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Right Column */}
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
 
                     {/* Skill Breakdown Chart */}
-                    <Card className="min-h-[300px] bg-card border-border">
+                    <Card className="min-h-75 bg-card border-border">
                         <CardHeader>
                             <CardTitle>Skill Breakdown</CardTitle>
                         </CardHeader>
-                        <CardContent className="h-[300px] w-full">
+                        <CardContent className="h-75 w-full">
                             <ResponsiveContainer width="100%" height="100%">
                                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={skillData}>
                                     <PolarGrid stroke="#e5e5e5" />

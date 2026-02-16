@@ -3,17 +3,17 @@ import { BookOpen, ExternalLink, PlayCircle } from "lucide-react";
 
 export default function ResourcesPage() {
     return (
-        <div className="space-y-8 animate-in fade-in duration-500">
-            <h1 className="text-3xl font-bold font-serif text-foreground">Learning Resources</h1>
+        <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-500">
+            <h1 className="text-2xl sm:text-3xl font-bold font-serif text-foreground">Learning Resources</h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
                 {/* Video Tutorials */}
-                <div className="bg-card p-6 rounded-lg shadow-sm border border-border">
-                    <div className="flex items-center gap-3 mb-6">
+                <div className="bg-card p-4 sm:p-6 rounded-lg shadow-sm border border-border">
+                    <div className="flex items-center gap-3 mb-4 sm:mb-6">
                         <div className="p-2 bg-primary/10 text-primary rounded-lg">
-                            <PlayCircle className="w-6 h-6" />
+                            <PlayCircle className="w-5 h-5 sm:w-6 sm:h-6" />
                         </div>
-                        <h2 className="text-xl font-bold text-foreground">Video Tutorials</h2>
+                        <h2 className="text-lg sm:text-xl font-bold text-foreground">Video Tutorials</h2>
                     </div>
                     <ul className="space-y-4">
                         {[1, 2, 3].map((i) => (
@@ -28,12 +28,12 @@ export default function ResourcesPage() {
                 </div>
 
                 {/* Documentation */}
-                <div className="bg-card p-6 rounded-lg shadow-sm border border-border">
-                    <div className="flex items-center gap-3 mb-6">
+                <div className="bg-card p-4 sm:p-6 rounded-lg shadow-sm border border-border">
+                    <div className="flex items-center gap-3 mb-4 sm:mb-6">
                         <div className="p-2 bg-primary/10 text-primary rounded-lg">
-                            <BookOpen className="w-6 h-6" />
+                            <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
                         </div>
-                        <h2 className="text-xl font-bold text-foreground">Essential Reading</h2>
+                        <h2 className="text-lg sm:text-xl font-bold text-foreground">Essential Reading</h2>
                     </div>
                     <ul className="space-y-4">
                         <li className="group">

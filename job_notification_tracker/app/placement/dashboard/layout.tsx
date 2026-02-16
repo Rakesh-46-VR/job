@@ -61,7 +61,7 @@ export default function DashboardLayout({
     return (
         <div className="h-screen overflow-hidden flex flex-col bg-background font-sans">
             {/* Header */}
-            <header className="fixed top-0 left-0 right-0 h-16 bg-card border-b border-border z-30 flex items-center justify-between px-4 lg:px-6 shadow-sm flex-shrink-0">
+            <header className="fixed top-0 left-0 right-0 h-16 bg-card border-b border-border z-30 flex items-center justify-between px-4 lg:px-6 shadow-sm shrink-0">
                 <div className="flex items-center gap-4">
                     <button
                         onClick={toggleSidebar}
@@ -72,7 +72,7 @@ export default function DashboardLayout({
                     </button>
                     <div className="flex items-center gap-2 font-serif font-bold text-xl text-primary">
                         <GraduationCap className="w-8 h-8" />
-                        <span>Placement Prep</span>
+                        <span>Vantage</span>
                     </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -122,7 +122,7 @@ export default function DashboardLayout({
                 )}
 
                 {/* Main Content */}
-                <main className="flex-1 overflow-y-auto p-4 lg:p-8 bg-background">
+                <main className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-8 bg-background">
                     {children}
                 </main>
             </div>
