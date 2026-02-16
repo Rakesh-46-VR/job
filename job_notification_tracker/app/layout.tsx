@@ -14,8 +14,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "KodNest Premium Build System",
-  description: "A premium, calm, and intentional build system for serious B2C product companies.",
+  title: "Vantage | Career Command Center",
+  description: "A premium, calm, and intentional career tracking system for high-performance candidates.",
 };
 
 export default function RootLayout({

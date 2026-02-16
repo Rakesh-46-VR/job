@@ -13,8 +13,8 @@ export default function Home() {
 
         {/* Context Header */}
         <ContextHeader
-          title="Project Initialization"
-          description="Configure the foundational settings for your new project. Ensure all environment variables and core dependencies are correctly established before proceeding."
+          title="Career Command Center"
+          description="Manage your job applications, optimize your resume with AI, and track your placement readiness in one focused workspace."
         />
 
         {/* Main Grid: Primary Workspace + Secondary Panel */}
@@ -22,31 +22,79 @@ export default function Home() {
 
           {/* Primary Workspace (70% -> col-span-8) */}
           <section className="lg:col-span-8 space-y-6">
-            <Card className="min-h-[400px] flex flex-col justify-center items-center border-dashed border-2 border-border/50 bg-background">
+
+            {/* Quick Stats Row */}
+            <div className="grid grid-cols-3 gap-6">
+              <Card className="flex flex-col gap-2">
+                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Active Applications</span>
+                <span className="text-3xl font-serif font-bold">12</span>
+              </Card>
+              <Card className="flex flex-col gap-2">
+                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Interviews Scheduled</span>
+                <span className="text-3xl font-serif font-bold">3</span>
+              </Card>
+              <Card className="flex flex-col gap-2">
+                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Readiness Score</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-serif font-bold text-primary">85</span>
+                  <span className="text-sm text-muted-foreground">/ 100</span>
+                </div>
+              </Card>
+            </div>
+
+            {/* Main Action Area */}
+            <Card className="min-h-[300px] flex flex-col justify-center items-center border-dashed border-2 border-border/50 bg-background">
               <div className="text-center space-y-4">
                 <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-secondary/50">
-                  <span className="text-xl">🛠️</span>
+                  <span className="text-xl">�</span>
                 </div>
-                <h3 className="text-lg font-medium">Workspace Area</h3>
+                <h3 className="text-lg font-medium">AI Resume Analyzer</h3>
                 <p className="text-muted-foreground text-sm max-w-sm mx-auto">
-                  This is where the main product interaction happens.
-                  Clean cards, predictable components, no crowding.
+                  Upload your current resume to get actionable feedback and match score against your target roles.
                 </p>
                 <div className="flex gap-4 justify-center pt-4">
-                  <Button variant="primary">Primary Action</Button>
-                  <Button variant="secondary">Secondary Action</Button>
+                  <Button variant="primary">Upload Resume</Button>
+                  <Button variant="secondary">View History</Button>
                 </div>
               </div>
             </Card>
 
             <div className="grid grid-cols-2 gap-6">
               <Card>
-                <h4 className="font-medium mb-2">Component A</h4>
-                <p className="text-sm text-muted-foreground">Standard card with subtle border and balanced padding.</p>
+                <div className="flex justify-between items-start mb-4">
+                  <h4 className="font-medium">Recent Notifications</h4>
+                  <Badge variant="warning">2 New</Badge>
+                </div>
+                <ul className="space-y-3">
+                  <li className="text-sm border-b border-border/50 pb-2">
+                    <span className="font-semibold block">Frontend Dev @ TechCorp</span>
+                    <span className="text-muted-foreground text-xs">Application Viewed • 2h ago</span>
+                  </li>
+                  <li className="text-sm border-b border-border/50 pb-2">
+                    <span className="font-semibold block">Full Stack @ StartupInc</span>
+                    <span className="text-muted-foreground text-xs">Interview Invitation • 5h ago</span>
+                  </li>
+                </ul>
               </Card>
               <Card>
-                <h4 className="font-medium mb-2">Component B</h4>
-                <p className="text-sm text-muted-foreground">Everything feels like one mind designed it. No visual drift.</p>
+                <div className="flex justify-between items-start mb-4">
+                  <h4 className="font-medium">Readiness Checklist</h4>
+                  <span className="text-xs text-muted-foreground font-mono">4/6</span>
+                </div>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="h-4 w-4 bg-success/20 rounded-full flex items-center justify-center text-[10px] text-success">✓</div>
+                    <span>DS & Algo Basics</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="h-4 w-4 bg-success/20 rounded-full flex items-center justify-center text-[10px] text-success">✓</div>
+                    <span>System Design</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="h-4 w-4 border border-border rounded-full"></div>
+                    <span className="text-muted-foreground">Mock Interview</span>
+                  </li>
+                </ul>
               </Card>
             </div>
           </section>
@@ -54,35 +102,30 @@ export default function Home() {
           {/* Secondary Panel (30% -> col-span-4) */}
           <aside className="lg:col-span-4 space-y-6 sticky top-24">
             <Card className="bg-secondary/10 border-transparent">
-              <h3 className="font-serif text-lg font-bold mb-3">Step Guidance</h3>
+              <h3 className="font-serif text-lg font-bold mb-3">Next Best Action</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                Review the configuration settings in the main workspace.
-                Once verified, copy the configuration prompt below to generate the next step.
+                Your profile visibility is low. Optimizing your LinkedIn headline could improve recruiter reach by 40%.
               </p>
 
-              <div className="bg-background border border-border rounded-md p-3 mb-4">
-                <code className="text-xs font-mono text-primary block break-words">
-                  /generate scaffold --type=react --auth=next-auth
-                </code>
-              </div>
-
               <div className="flex flex-col gap-3">
-                <Button variant="outline" className="w-full justify-start text-left normal-case">
-                  📋 Copy Prompt
+                <Button variant="primary" className="w-full justify-start text-left normal-case">
+                  Optimize Profile
                 </Button>
                 <Button variant="ghost" className="w-full justify-start text-left normal-case text-muted-foreground hover:text-foreground">
-                  View Documentation
+                  Dismiss
                 </Button>
               </div>
             </Card>
 
             <div className="space-y-3">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Status</span>
-                <Badge variant="warning">Pending Input</Badge>
+                <span className="text-muted-foreground">System Status</span>
+                <Badge variant="success">Online</Badge>
               </div>
               <div className="h-px bg-border my-2" />
-              <Button className="w-full">Confirm & Proceed</Button>
+              <div className="text-xs text-muted-foreground">
+                Last synced: Just now
+              </div>
             </div>
           </aside>
 
