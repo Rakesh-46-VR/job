@@ -6,7 +6,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     return (
         <div className="min-h-screen bg-background flex flex-col">
             <TopBar />
-            <main className="flex-1 container mx-auto px-6 pb-24">
+            <main className="flex-1 container mx-auto px-6 pb-40 md:pb-24">
                 {children}
             </main>
             <ProofFooter />
