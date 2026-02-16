@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Badge } from '@/components/ui/Badge';
 
 export function TopBar() {
     const pathname = usePathname();
@@ -26,7 +25,7 @@ export function TopBar() {
                 <div className="flex items-center gap-6">
                     {/* Logo Section */}
                     <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-                        <div className="h-14 w-14 relative flex items-center justify-center">
+                        <div className="w-8 h-8 relative flex items-center justify-center">
                             <Image
                                 src="/logo.png"
                                 alt="Vantage Logo"
