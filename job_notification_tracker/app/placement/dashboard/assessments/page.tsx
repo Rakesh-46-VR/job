@@ -31,7 +31,7 @@ export default function AssessmentsPage() {
                     {[1, 2].map((i) => (
                         <div key={i} className="bg-background p-3 sm:p-4 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border border-border hover:bg-secondary/10 transition-colors">
                             <div className="flex items-center gap-3 sm:gap-4">
-                                <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                                <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
                                 <div>
                                     <h4 className="font-medium text-foreground text-sm sm:text-base">Algorithms Basics {i}</h4>
                                     <p className="text-xs text-muted-foreground">Completed on Feb 10, 2026</p>

@@ -1,10 +1,42 @@
+"use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Code, Video, BarChart, ArrowRight } from "lucide-react";
+import { Code, Video, BarChart, ArrowRight, ArrowLeft } from "lucide-react";
 
 export default function PlacementLandingPage() {
+    const router = useRouter();
+
+    useEffect(() => {
+        // Check if user has already viewed the placement landing page
+        const hasViewedPlacement = localStorage.getItem("placement_landing_viewed");
+        if (hasViewedPlacement === "true") {
+            router.push("/placement/dashboard");
+        }
+    }, [router]);
+
+    const handleGetStarted = () => {
+        // Mark landing page as viewed
+        localStorage.setItem("placement_landing_viewed", "true");
+        router.push("/placement/dashboard");
+    };
+
     return (
         <div className="min-h-screen flex flex-col font-sans bg-background text-foreground">
+            {/* Header with Back Button */}
+            <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur">
+                <div className="container flex h-16 items-center px-4 sm:px-6">
+                    <Link
+                        href="/"
+                        className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        Back to Home
+                    </Link>
+                </div>
+            </header>
+
             {/* Hero Section */}
             <section className="flex-1 flex flex-col justify-center items-center text-center px-4 sm:px-6 py-16 sm:py-24 bg-background">
                 <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
@@ -15,12 +47,12 @@ export default function PlacementLandingPage() {
                         Practice, assess, and prepare for your dream job with our comprehensive readiness platform.
                     </p>
                     <div className="pt-4">
-                        <Link
-                            href="/placement/dashboard"
-                            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary text-white rounded-lg text-base sm:text-lg font-semibold hover:brightness-110 transition-all shadow-lg"
+                        <button
+                            onClick={handleGetStarted}
+                            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary text-white rounded-lg text-base sm:text-lg font-semibold hover:brightness-110 transition-all shadow-lg cursor-pointer"
                         >
                             Get Started <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </section>

@@ -18,7 +18,7 @@ export default function Home() {
         />
 
         <div className="grid grid-cols-1 gap-8 items-start">
-          <Card className="min-h-[400px] flex flex-col justify-center items-center border-dashed border-2 border-border/50 bg-background/50">
+          <Card className="min-h-100 flex flex-col justify-center items-center border-dashed border-2 border-border/50 bg-background/50">
             <div className="text-center space-y-6 max-w-md mx-auto">
               <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-secondary/30 mb-2">
                 <span className="text-3xl">🎯</span>

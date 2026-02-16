@@ -62,7 +62,7 @@ export default function ShipPage() {
                     description="All systems verified. You are clear to launch."
                 />
 
-                <Card className="p-8 bg-gradient-to-br from-white to-green-50/50 border-green-100">
+                <Card className="p-8 bg-linear-to-br from-white to-green-50/50 border-green-100">
                     <div className="space-y-6">
                         <h2 className="text-xl font-bold text-green-900">Deployment Manifest</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">

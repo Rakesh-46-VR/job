@@ -6,19 +6,16 @@ import { ContextHeader } from "@/components/layout/ContextHeader";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export default function ShipPage() {
     const [isVerified, setIsVerified] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const router = useRouter();
 
     useEffect(() => {
-        const saved = localStorage.getItem("prp_test_checklist_status");
+        const saved = localStorage.getItem("rb_test_checklist");
         if (saved) {
             try {
                 const checkedItems = JSON.parse(saved);
-                // Check if all 10 tests are completed
                 if (checkedItems.length >= 10) {
                     setIsVerified(true);
                 }
@@ -40,7 +37,7 @@ export default function ShipPage() {
                     <p className="text-muted-foreground max-w-md">
                         You cannot access the shipping station until all system verification tests have passed.
                     </p>
-                    <Link href="/prp/07-test">
+                    <Link href="/rb/07-test">
                         <Button variant="outline" className="mt-4">
                             ← Return to Verification Checklist
                         </Button>
@@ -88,7 +85,7 @@ export default function ShipPage() {
                     <Link href="/">
                         <Button variant="outline">Back Home</Button>
                     </Link>
-                    <Link href="/prp/proof">
+                    <Link href="/rb/proof">
                         <Button className="bg-green-600 hover:bg-green-700 text-white px-8">
                             Prepare Release Bundle
                         </Button>

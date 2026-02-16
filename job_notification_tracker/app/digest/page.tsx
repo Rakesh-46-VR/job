@@ -135,7 +135,7 @@ export default function Digest() {
                 />
 
                 {!digest ? (
-                    <Card className="min-h-[300px] flex flex-col justify-center items-center border-dashed border-2 border-border/50 bg-background/50 p-8">
+                    <Card className="min-h-75 flex flex-col justify-center items-center border-dashed border-2 border-border/50 bg-background/50 p-8">
                         <div className="text-center space-y-6 max-w-md mx-auto">
                             <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-3xl">
                                 📬
@@ -171,7 +171,7 @@ export default function Digest() {
                                     digest.map((job, index) => (
                                         <div key={job.id} className="group bg-white p-5 md:rounded-lg border-b md:border border-border hover:shadow-md transition-all flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
                                             <div className="flex gap-4 items-start">
-                                                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary text-muted-foreground flex items-center justify-center font-bold text-sm">
+                                                <div className="shrink-0 w-8 h-8 rounded-full bg-secondary text-muted-foreground flex items-center justify-center font-bold text-sm">
                                                     {index + 1}
                                                 </div>
                                                 <div>

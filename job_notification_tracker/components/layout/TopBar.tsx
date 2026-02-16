@@ -13,7 +13,8 @@ import {
     Settings,
     GraduationCap,
     Menu,
-    X
+    X,
+    FileUser
 } from 'lucide-react';
 
 export function TopBar() {
@@ -23,9 +24,9 @@ export function TopBar() {
     const navLinks = [
         { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
         { name: 'Placement', href: '/placement', icon: GraduationCap },
+        { name: 'Resume Builder', href: '/resume-builder', icon: FileUser },
         { name: 'Saved', href: '/saved', icon: Bookmark },
         { name: 'Digest', href: '/digest', icon: FileText },
-        { name: 'Proof', href: '/proof', icon: ShieldCheck },
         { name: 'Settings', href: '/settings', icon: Settings },
     ];
 

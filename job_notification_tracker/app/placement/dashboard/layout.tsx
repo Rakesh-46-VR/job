@@ -13,6 +13,7 @@ import {
     BookOpen,
     User,
     GraduationCap,
+    ArrowLeft,
 } from "lucide-react";
 
 export default function DashboardLayout({
@@ -63,6 +64,14 @@ export default function DashboardLayout({
             {/* Header */}
             <header className="fixed top-0 left-0 right-0 h-16 bg-card border-b border-border z-30 flex items-center justify-between px-4 lg:px-6 shadow-sm shrink-0">
                 <div className="flex items-center gap-4">
+                    <Link
+                        href="/"
+                        className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        <span className="hidden sm:inline">Home</span>
+                    </Link>
+                    <div className="h-6 w-px bg-border hidden sm:block" />
                     <button
                         onClick={toggleSidebar}
                         className="lg:hidden p-2 rounded-md hover:bg-secondary/10 text-muted-foreground"
