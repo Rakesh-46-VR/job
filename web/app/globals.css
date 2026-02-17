@@ -67,6 +67,6 @@
   input,
   textarea,
   select {
-    @apply border border-border rounded-md px-3 py-2 bg-white ring-offset-background outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-200 ease-in-out;
+    @apply border border-border rounded-md px-3 py-2 bg-white outline-none focus:border-primary transition-all duration-200 ease-in-out;
   }
 }

@@ -4,6 +4,7 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { ContextHeader } from "@/components/layout/ContextHeader";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { MultiSelect } from "@/components/ui/MultiSelect";
 import { useState, useEffect } from "react";
 import { UserPreferences } from "@/utils/matchScore";
 
@@ -17,34 +18,35 @@ export default function Settings() {
         minMatchScore: 40
     });
 
-    // Temp state for inputs before converting to arrays
-    const [roleInput, setRoleInput] = useState("");
-    const [locInput, setLocInput] = useState("");
-    const [skillsInput, setSkillsInput] = useState("");
-
     const [message, setMessage] = useState("");
+
+    const COMMON_ROLES = [
+        "Frontend Developer", "Backend Developer", "Full Stack Developer",
+        "Mobile Developer", "DevOps Engineer", "Data Scientist",
+        "Product Manager", "UI/UX Designer", "Software Engineer"
+    ];
+
+    const COMMON_LOCATIONS = [
+        "Remote", "Bangalore", "Mumbai", "Delhi", "Hyderabad",
+        "Pune", "Chennai", "San Francisco", "New York", "London", "Berlin"
+    ];
+
+    const COMMON_SKILLS = [
+        "React", "Node.js", "TypeScript", "Python", "Java",
+        "AWS", "Docker", "Kubernetes", "SQL", "GraphQL",
+        "Next.js", "Tailwind CSS", "Go", "Rust", "C++"
+    ];
 
     useEffect(() => {
         const saved = localStorage.getItem('jobTrackerPreferences');
         if (saved) {
             const parsed = JSON.parse(saved);
             setPrefs(parsed);
-            setRoleInput(parsed.roleKeywords.join(", "));
-            setLocInput(parsed.preferredLocations.join(", "));
-            setSkillsInput(parsed.skills.join(", "));
         }
     }, []);
 
     const handleSave = () => {
-        const newPrefs: UserPreferences = {
-            ...prefs,
-            roleKeywords: roleInput.split(",").map(s => s.trim()).filter(Boolean),
-            preferredLocations: locInput.split(",").map(s => s.trim()).filter(Boolean),
-            skills: skillsInput.split(",").map(s => s.trim()).filter(Boolean),
-        };
-
-        localStorage.setItem('jobTrackerPreferences', JSON.stringify(newPrefs));
-        setPrefs(newPrefs);
+        localStorage.setItem('jobTrackerPreferences', JSON.stringify(prefs));
         setMessage("Preferences saved successfully!");
         setTimeout(() => setMessage(""), 3000);
     };
@@ -73,9 +75,6 @@ export default function Settings() {
                 skills: [],
                 minMatchScore: 40
             });
-            setRoleInput("");
-            setLocInput("");
-            setSkillsInput("");
             setMessage("Preferences deleted successfully.");
             setTimeout(() => setMessage(""), 3000);
         }
@@ -95,14 +94,13 @@ export default function Settings() {
                         <div className="space-y-4">
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-muted-foreground">Role Keywords</label>
-                                <input
-                                    type="text"
-                                    value={roleInput}
-                                    onChange={(e) => setRoleInput(e.target.value)}
-                                    placeholder="e.g. Frontend Engineer, React Developer"
-                                    className="w-full p-2 border border-border rounded-md bg-background"
+                                <MultiSelect
+                                    value={prefs.roleKeywords}
+                                    onChange={(newVal) => setPrefs({ ...prefs, roleKeywords: newVal })}
+                                    options={COMMON_ROLES}
+                                    placeholder="Select or type role keywords..."
                                 />
-                                <p className="text-xs text-muted-foreground">Separate multiple keywords with commas.</p>
+                                <p className="text-xs text-muted-foreground">Select roles or type to add custom ones.</p>
                             </div>
 
                             <div className="space-y-2">
@@ -122,14 +120,13 @@ export default function Settings() {
 
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-muted-foreground">Skills</label>
-                                <input
-                                    type="text"
-                                    value={skillsInput}
-                                    onChange={(e) => setSkillsInput(e.target.value)}
-                                    placeholder="e.g. React, TypeScript, Node.js"
-                                    className="w-full p-2 border border-border rounded-md bg-background"
+                                <MultiSelect
+                                    value={prefs.skills}
+                                    onChange={(newVal) => setPrefs({ ...prefs, skills: newVal })}
+                                    options={COMMON_SKILLS}
+                                    placeholder="Select or type skills..."
                                 />
-                                <p className="text-xs text-muted-foreground">Separate skills with commas.</p>
+                                <p className="text-xs text-muted-foreground">Select skills or type to add custom ones.</p>
                             </div>
                         </div>
                     </Card>
@@ -139,14 +136,13 @@ export default function Settings() {
                         <div className="space-y-4">
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-muted-foreground">Preferred Locations</label>
-                                <input
-                                    type="text"
-                                    value={locInput}
-                                    onChange={(e) => setLocInput(e.target.value)}
-                                    placeholder="e.g. Bangalore, Remote, Pune"
-                                    className="w-full p-2 border border-border rounded-md bg-background"
+                                <MultiSelect
+                                    value={prefs.preferredLocations}
+                                    onChange={(newVal) => setPrefs({ ...prefs, preferredLocations: newVal })}
+                                    options={COMMON_LOCATIONS}
+                                    placeholder="Select or type locations..."
                                 />
-                                <p className="text-xs text-muted-foreground">Separate locations with commas.</p>
+                                <p className="text-xs text-muted-foreground">Select locations or type to add custom ones.</p>
                             </div>
 
                             <div className="space-y-2">
